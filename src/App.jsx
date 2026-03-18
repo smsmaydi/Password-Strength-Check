@@ -48,6 +48,12 @@ const DICTIONARY_LINKS = {
 // Tooltip: follows mouse position, disappears when hover ends
 const TOOLTIP_OFFSET = { x: 14, y: 10 }
 
+/**
+ * Renders a small "?" tooltip that follows the mouse while you hover.
+ * Used to explain what each zxcvbn pattern type means.
+ *
+ * @param {{ text: string }} props
+ */
 function HelpTip({ text }) {
   const [visible, setVisible] = useState(false)
   const [pos, setPos] = useState({ x: 0, y: 0 })
@@ -88,7 +94,13 @@ function HelpTip({ text }) {
   )
 }
 
-// Human-readable label for pattern type (for display + tooltip key)
+/**
+ * Converts zxcvbn match pattern names (dictionary, sequence, etc.)
+ * into short human-readable labels.
+ *
+ * @param {string} pattern
+ * @returns {string}
+ */
 function getPatternTypeLabel(pattern) {
   const labels = {
     bruteforce: 'Bruteforce',
@@ -102,14 +114,26 @@ function getPatternTypeLabel(pattern) {
   return labels[pattern] || pattern
 }
 
-// Get dictionary link info for a match (or null)
+/**
+ * For dictionary matches, returns the label and the direct GitHub URL
+ * to the exact `.txt` word list file used by zxcvbn.
+ *
+ * @param {object} match zxcvbn match object
+ * @returns {{ label: string, url: string } | null}
+ */
 function getDictionaryLink(match) {
   if (match.pattern !== 'dictionary' || !match.dictionary_name) return null
   const key = match.dictionary_name
   return DICTIONARY_LINKS[key] || { label: key.replace(/_/g, ' '), url: `${ZXCVBN_DATA_BASE}/${key}.txt` }
 }
 
-// Human-readable description for each matched pattern (like tryzxcvbn)
+/**
+ * Produces a human-readable description for each matched zxcvbn pattern.
+ * For dictionary matches, it returns an object so the UI can render a link.
+ *
+ * @param {object} match zxcvbn match object
+ * @returns {string | { type: 'dictionary', name: string, rank: string, extra: string }}
+ */
 function getPatternDescription(match) {
   const token = match.token
   switch (match.pattern) {
@@ -136,7 +160,13 @@ function getPatternDescription(match) {
   }
 }
 
-// Render pattern detail: dictionary shows name as link, others as plain text
+/**
+ * Renders the pattern "detail" part:
+ * - Dictionary: shows the dictionary name as a clickable link.
+ * - Others: shows plain text.
+ *
+ * @param {{ match: object }} props
+ */
 function PatternDetail({ match }) {
   const desc = getPatternDescription(match)
   if (typeof desc === 'object' && desc.type === 'dictionary') {
