@@ -1,6 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import zxcvbn from 'zxcvbn'
 import './App.css'
+
+/** localStorage key for light/dark theme (must match inline script in index.html). */
+const THEME_STORAGE_KEY = 'app-theme'
 
 // Inline SVGs so fill="currentColor" inherits from button (Bootstrap Icons style)
 const IconEye = () => (
@@ -18,7 +21,14 @@ const IconEyeSlash = () => (
 )
 
 const STRENGTH_LABELS = ['Very weak', 'Weak', 'Fair', 'Strong', 'Very strong']
-const STRENGTH_COLORS = ['#f87171', '#fb923c', '#fbbf24', '#34d399', '#22d3ee']
+/** CSS variable names from theme.css (score meter colors). */
+const STRENGTH_COLORS = [
+  'var(--score-0)',
+  'var(--score-1)',
+  'var(--score-2)',
+  'var(--score-3)',
+  'var(--score-4)',
+]
 
 // One-sentence tooltips for each pattern type (shown on ? hover)
 const PATTERN_TOOLTIPS = {
@@ -34,7 +44,6 @@ const PATTERN_TOOLTIPS = {
 const MATCH_SEQUENCE_TOOLTIP = 'The list of patterns zxcvbn found in your password; each part is scored and combined to estimate strength.'
 
 // Dictionary / word list names → label and link to the exact .txt file on zxcvbn GitHub
-const ZXCVBN_REPO = 'https://github.com/dropbox/zxcvbn'
 const ZXCVBN_DATA_BASE = 'https://github.com/dropbox/zxcvbn/blob/master/data'
 const DICTIONARY_LINKS = {
   passwords: { label: 'Common passwords', url: `${ZXCVBN_DATA_BASE}/passwords.txt` },
@@ -186,6 +195,25 @@ function PatternDetail({ match }) {
 function App() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [colorMode, setColorMode] = useState(() => {
+    if (typeof window === 'undefined') return 'light'
+    try {
+      const saved = localStorage.getItem(THEME_STORAGE_KEY)
+      if (saved === 'dark' || saved === 'light') return saved
+    } catch {
+      /* ignore */
+    }
+    return 'light'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', colorMode)
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, colorMode)
+    } catch {
+      /* ignore */
+    }
+  }, [colorMode])
 
   const result = useMemo(() => {
     if (!password) return null
@@ -198,7 +226,28 @@ function App() {
   const sequence = result?.sequence ?? []
 
   return (
-    <main className="app">
+    <>
+      <div className="theme-toggle" role="group" aria-label="Color theme">
+        <button
+          type="button"
+          className="theme-toggle__btn"
+          aria-pressed={colorMode === 'light'}
+          title="Use light theme"
+          onClick={() => setColorMode('light')}
+        >
+          Light
+        </button>
+        <button
+          type="button"
+          className="theme-toggle__btn"
+          aria-pressed={colorMode === 'dark'}
+          title="Use dark theme"
+          onClick={() => setColorMode('dark')}
+        >
+          Dark
+        </button>
+      </div>
+      <main className="app">
       <header className="header">
         <h1>Password Strength Checker</h1>
         <p className="subtitle">
@@ -373,6 +422,7 @@ function App() {
         No data is sent to any server. Analysis runs entirely in your browser.
       </footer>
     </main>
+    </>
   )
 }
 

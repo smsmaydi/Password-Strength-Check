@@ -9,20 +9,24 @@
 }
 
 .header h1 {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: var(--text-title-size);
+  font-weight: var(--text-title-weight);
+  line-height: var(--line-height-tight);
   margin: 0 0 0.5rem;
   letter-spacing: -0.02em;
+  color: var(--text);
 }
 
 .subtitle {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--text-subtitle-size);
+  font-weight: var(--text-subtitle-weight);
+  line-height: var(--line-height-body);
   color: var(--text-muted);
 }
 
 .subtitle a {
-  color: var(--accent);
+  color: var(--accent-primary);
   text-decoration: none;
 }
 
@@ -40,8 +44,8 @@
 
 .label {
   display: block;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: var(--text-label-size);
+  font-weight: var(--text-section-weight);
   color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
@@ -55,46 +59,45 @@
 .input {
   flex: 1;
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: var(--text-body-size);
   padding: 0.75rem 1rem;
-  background: var(--bg);
+  background: var(--input-bg);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   color: var(--text);
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .input::placeholder {
   color: var(--text-muted);
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-dim);
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 2px var(--focus-ring-soft);
 }
 
 .toggle-visibility {
   padding: 0.5rem 0.75rem;
-  background: var(--surface-hover);
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   color: var(--text);
   cursor: pointer;
-  font-size: 1.1rem;
   transition: background 0.2s;
 }
 
 .toggle-visibility:hover {
-  background: var(--border);
+  background: var(--surface-hover);
 }
 
 .toggle-icon {
-  fill:#fff;
   display: block;
   width: 1.25rem;
   height: 1.25rem;
+  flex-shrink: 0;
 }
 
 .strength-row {
@@ -105,49 +108,49 @@
 }
 
 .strength-label {
-  font-size: 0.85rem;
+  font-size: var(--text-label-size);
   color: var(--text-muted);
 }
 
 .strength-value {
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: var(--text-section-weight);
+  font-size: var(--text-subtitle-size);
 }
 
 .meter-wrap {
   height: 6px;
-  background: var(--border);
-  border-radius: 3px;
+  background: var(--meter-track);
+  border-radius: var(--radius-micro);
   overflow: hidden;
   margin-bottom: 1.25rem;
 }
 
 .meter-fill {
   height: 100%;
-  border-radius: 3px;
+  border-radius: var(--radius-micro);
   transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 .feedback {
-  background: var(--bg);
+  background: var(--step-accent-soft);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 1rem;
   margin-bottom: 1.25rem;
 }
 
 .feedback-warning {
   margin: 0 0 0.5rem;
-  font-size: 0.9rem;
-  color: var(--fair);
+  font-size: var(--text-subtitle-size);
+  color: var(--warning);
 }
 
 .suggestions {
   margin: 0;
   padding-left: 1.25rem;
-  font-size: 0.9rem;
+  font-size: var(--text-subtitle-size);
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: var(--line-height-body);
 }
 
 .analysis-section {
@@ -155,8 +158,8 @@
 }
 
 .section-title {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: var(--text-section-size);
+  font-weight: var(--text-section-weight);
   color: var(--text-muted);
   margin: 0 0 0.35rem;
   text-transform: uppercase;
@@ -166,7 +169,6 @@
   gap: 0.35rem;
 }
 
-/* Help tip: ? icon with tooltip that follows mouse */
 .help-tip-wrap {
   position: relative;
   display: inline-flex;
@@ -181,17 +183,17 @@
   width: 1.1rem;
   height: 1.1rem;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: var(--text-section-weight);
   color: var(--text-muted);
-  background: var(--border);
+  background: var(--surface-hover);
   border-radius: 50%;
   cursor: help;
   transition: color 0.15s, background 0.15s;
 }
 
 .help-tip-wrap:hover .help-tip-icon {
-  color: var(--bg);
-  background: var(--accent);
+  color: var(--on-accent);
+  background: var(--accent-primary);
 }
 
 .help-tip-bubble {
@@ -199,18 +201,17 @@
   z-index: 10;
   max-width: 220px;
   padding: 0.5rem 0.65rem;
-  font-size: 0.8rem;
-  font-weight: 400;
-  line-height: 1.35;
-  color: var(--bg);
-  background: var(--text);
-  border-radius: 6px;
+  font-size: var(--text-caption-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--line-height-body);
+  color: var(--popover-text);
+  background: var(--popover-bg);
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow);
   white-space: normal;
   pointer-events: none;
 }
 
-/* Tooltip follows cursor */
 .help-tip-bubble--follow {
   position: fixed;
   transform: none;
@@ -222,8 +223,9 @@
 
 .analysis-desc {
   margin: 0 0 0.6rem;
-  font-size: 0.85rem;
+  font-size: var(--text-label-size);
   color: var(--text-muted);
+  line-height: var(--line-height-body);
 }
 
 .pattern-list {
@@ -234,11 +236,11 @@
 
 .pattern-item {
   padding: 0.5rem 0.75rem;
-  background: var(--bg);
+  background: var(--input-bg);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   margin-bottom: 0.4rem;
-  font-size: 0.88rem;
+  font-size: var(--text-subtitle-size);
 }
 
 .pattern-item:last-child {
@@ -265,7 +267,7 @@
   display: flex;
   align-items: baseline;
   gap: 0.4rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption-size);
 }
 
 .pattern-extra-label {
@@ -275,24 +277,24 @@
 
 .pattern-extra-value {
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--accent-primary);
   word-break: break-word;
 }
 
 .pattern-token {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--text-caption-size);
   background: var(--surface-hover);
   padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  color: var(--accent);
+  border-radius: var(--radius-xs);
+  color: var(--accent-primary);
 }
 
 .pattern-type {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  font-weight: 600;
+  font-weight: var(--text-section-weight);
   color: var(--text);
 }
 
@@ -301,7 +303,7 @@
 }
 
 .pattern-dict-link {
-  color: var(--accent);
+  color: var(--accent-primary);
   text-decoration: none;
   font-weight: 500;
 }
@@ -330,23 +332,23 @@
 .library-link {
   display: inline-block;
   padding: 0.25rem 0.5rem;
-  font-size: 0.85rem;
-  color: var(--accent);
-  background: var(--bg);
+  font-size: var(--text-label-size);
+  color: var(--accent-primary);
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   text-decoration: none;
   transition: background 0.15s, border-color 0.15s;
 }
 
 .library-link:hover {
   background: var(--surface-hover);
-  border-color: var(--accent);
+  border-color: var(--accent-primary);
 }
 
 .pattern-guesses {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: var(--text-caption-size);
   color: var(--text-muted);
   margin-left: auto;
 }
@@ -356,8 +358,8 @@
 }
 
 .crack-title {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: var(--text-section-size);
+  font-weight: var(--text-section-weight);
   color: var(--text-muted);
   margin: 0 0 0.75rem;
   text-transform: uppercase;
@@ -375,7 +377,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.4rem 0;
-  font-size: 0.9rem;
+  font-size: var(--text-subtitle-size);
   border-bottom: 1px solid var(--border);
 }
 
@@ -389,27 +391,29 @@
 
 .crack-value {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: var(--text-label-size);
   color: var(--text);
 }
 
 .meta {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: var(--text-caption-size);
   color: var(--text-muted);
+  line-height: var(--line-height-body);
 }
 
 .meta code {
   font-family: var(--font-mono);
-  background: var(--bg);
+  background: var(--input-bg);
   padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  border-radius: var(--radius-xs);
+  font-size: var(--text-code-inline-size);
 }
 
 .footer {
   text-align: center;
   margin-top: 1.5rem;
-  font-size: 0.8rem;
+  font-size: var(--text-caption-size);
   color: var(--text-muted);
+  line-height: var(--line-height-body);
 }
